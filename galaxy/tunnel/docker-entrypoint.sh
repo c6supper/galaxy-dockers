@@ -12,6 +12,7 @@ ca $OVPN_CA
 cert $OVPN_CERT
 key $OVPN_KEY
 EOF
+mkdir -p $OVPN_IP_POOL_DIR
 }
 
 if [ ! -f "$GALAXY_INITIALIZED_MARK" ]; then
