@@ -28,6 +28,7 @@ ENV OVPN_IP_POOL  10.0.0.0
 ENV OVPN_CA ca.crt
 ENV OVPN_CERT server1.crt
 ENV OVPN_KEY server1.key
+ENV OVPN_IP_POOL_DIR /tmp/openvpn/ip-pool
 # default configuration for istio
 ENV RUN_AFTER_SIDECAR yes
 
