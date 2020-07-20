@@ -27,8 +27,13 @@ else
 fi
  
 mkdir -p $OVPN_IP_POOL_DIR
+
+cat > /etc/inetd.conf <<EOF
+80      stream  tcp     nowait  nobody  /usr/bin/nc nc nginx 80
+EOF
  
 if [ "$RUN_AFTER_SIDECAR" = "yes" ]; then
 	until wget --spider localhost:15000 > /dev/null; do echo '>>> Waiting for sidecar'; sleep 2 ; done ; echo '>>> Sidecar available';sleep 5;
 fi
+inetd
 /bin/sh -c "$@"
