@@ -22,7 +22,7 @@ EOSQL
   apt-get remove -y postgresql-client > /dev/null
 }
 
-$GALAXY_DIR/tcp-port-wait.sh $GALAXY_POSTGRES_HOST 5432
+$GALAXY_DIR/liveness_probe.sh $GALAXY_POSTGRES_HOST 5432
 
 if [ ! -f "$GALAXY_INITIALIZED_MARK" ]; then
   patch_conf
