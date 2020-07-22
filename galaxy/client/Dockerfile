@@ -19,8 +19,9 @@ COPY ezremote.war /usr/local/tomcat/webapps/
 
 ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
-
 RUN mkdir -p $GALAXY_DIR
+
+ENV GALAXY_CLIENT_LOG_DIR /usr/local/tomcat/logs
 
 COPY ./version $GALAXY_DIR/version
 COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
