@@ -35,6 +35,6 @@ ENV RUN_AFTER_SIDECAR yes
 # initilization for the first time
 ENTRYPOINT ["/galaxy/docker-entrypoint.sh"]
 
-EXPOSE 1194/tcp 1195/udp 1196/udp
+EXPOSE 1194/tcp 1195/tcp 1196/tcp
 
 CMD ["openvpn --cd $OPENVPN_DIR --config $OVPN_CONFIG 2>&1"]
