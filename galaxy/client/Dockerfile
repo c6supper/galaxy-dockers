@@ -7,7 +7,7 @@ RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y gettext-base netcat-traditional
+    apt-get install -y gettext-base netcat-traditional postgresql-client
 
 RUN rm -rf /var/lib/apt/lists/*
 

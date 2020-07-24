@@ -4,9 +4,6 @@ set -ex
 
 patch_conf() {
   defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
-  apt-get update > /dev/null
-  apt-get install -y postgresql-client > /dev/null
-  rm -rf /var/lib/apt/lists/*
 
   export PGPASSWORD=$GALAXY_POSTGRES_PASSWORD
   if psql -h $GALAXY_POSTGRES_HOST -U $GALAXY_POSTGRES_USER -l | awk '{ print $1 }' | grep -qw $GALAXY_CLIENT_DB; then
@@ -22,7 +19,6 @@ EOSQL
   fi
 
   envsubst "$defined_envs" < "/etc/guacamole/guacamole.properties.template" > "/etc/guacamole/guacamole.properties"
-  apt-get remove -y postgresql-client > /dev/null
 }
 
 $GALAXY_DIR/liveness_probe.sh $GALAXY_POSTGRES_HOST 5432
