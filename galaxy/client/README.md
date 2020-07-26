@@ -8,4 +8,4 @@
 3. **Export client profiles to directory "etc/guacamole"**
 4. **Copy guacamole-client database schema SQL to directory "./schema"**
 5. **Debug, docker build --no-cache -t c6supper/galaxy-client -f Dockerfile --build-arg LIVENESS_PROBE="$(cat ../../build-env/tcp-port-wait.sh)" ./**
-6. **Release, "../../build-env/build.sh c6supper galaxy-client release LIVENESS_PROBE="$(cat ../../build-env/tcp-port-wait.sh)", the built image will be push to c6supper repositories as default.**
+6. **Release, "../../build-env/build.sh c6supper galaxy-client release", the built image will be push to c6supper repositories as default.**

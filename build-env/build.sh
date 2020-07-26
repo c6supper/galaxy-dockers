@@ -14,8 +14,9 @@ IMAGE=$2
 
 version=$(cat version)
 echo "version: $version"
+DIR="$(dirname "$(readlink -f "$0")")"
 
-docker build --no-cache -t $NAME/$IMAGE -t $NAME/$IMAGE:$version ./
+docker build --no-cache -t $NAME/$IMAGE -t $NAME/$IMAGE:$version ./ --build-arg LIVENESS_PROBE="$(cat ${DIR}/tcp-port-wait.sh)"
 
 if [ "$#" -ge  "2" ]
   then
