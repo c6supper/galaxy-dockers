@@ -63,6 +63,7 @@ COPY ./version $GALAXY_DIR/version
 COPY ./docker-entrypoint.sh /galaxy/docker-entrypoint.sh
 ENV GALAXY_CLIENT_HOST galaxy-client
 ENV GALAXY_TUNNEL_HOST galaxy-tunnel
+ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
 
 # Copy build artifacts into this stage
 COPY --from=builder ${PREFIX_DIR}/sbin/nginx ${PREFIX_DIR}/sbin/nginx
