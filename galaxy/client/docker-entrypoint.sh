@@ -18,6 +18,11 @@ patch_conf() {
 EOSQL
   fi
 
+  export GALAXY_AUTH_EP=$GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/auth
+  export GALAXY_JWKS_EP=$GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/certs
+  export GALAXY_ISSUER=$GALAXY_AUTH_URL/auth/realms/VeEX
+  export GALAXY_REDIRECT_URI=$GALAXY_AUTH_URL/guacamole/
+
   envsubst "$defined_envs" < "/etc/guacamole/guacamole.properties.template" > "/etc/guacamole/guacamole.properties"
 }
 

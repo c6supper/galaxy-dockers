@@ -42,11 +42,7 @@ ENV GALAXY_CLIENT_PASSWORD 123
 
 #openid related properties
 ENV GALAXY_AUTH_URL https://localhost
-ENV GALAXY_AUTH_EP $GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/auth
-ENV GALAXY_JWKS_EP $GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/certs
-ENV GALAXY_ISSUER $GALAXY_AUTH_URL/auth/realms/VeEX
 ENV GALAXY_CLIENT_ID EZRemote
-ENV GALAXY_REDIRECT_URI $GALAXY_AUTH_URL/guacamole/
 
 # initilization for the first time
 ENTRYPOINT ["/galaxy/docker-entrypoint.sh"]
