@@ -42,6 +42,7 @@ ENV GALAXY_CLIENT_PASSWORD 123
 
 #openid related properties
 ENV GALAXY_AUTH_URL https://localhost
+ENV GALAXY_AUTH_URI keycloak
 ENV GALAXY_CLIENT_ID EZRemote
 
 # initilization for the first time

@@ -3,8 +3,6 @@
 set -ex
 
 patch_conf() {
-  defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
-
   export PGPASSWORD=$GALAXY_POSTGRES_PASSWORD
   if psql -h $GALAXY_POSTGRES_HOST -U $GALAXY_POSTGRES_USER -l | awk '{ print $1 }' | grep -qw $GALAXY_CLIENT_DB; then
       echo "$GALAXY_CLIENT_DB is existed."
@@ -18,11 +16,12 @@ patch_conf() {
 EOSQL
   fi
 
-  export GALAXY_AUTH_EP=$GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/auth
-  export GALAXY_JWKS_EP=$GALAXY_AUTH_URL/auth/realms/VeEX/protocol/openid-connect/certs
-  export GALAXY_ISSUER=$GALAXY_AUTH_URL/auth/realms/VeEX
-  export GALAXY_REDIRECT_URI=$GALAXY_AUTH_URL/guacamole/
+  export GALAXY_AUTH_EP=$GALAXY_AUTH_URL/$GALAXY_AUTH_URI/auth/realms/VeEX/protocol/openid-connect/auth
+  export GALAXY_JWKS_EP=$GALAXY_AUTH_URL/$GALAXY_AUTH_URI/auth/realms/VeEX/protocol/openid-connect/certs
+  export GALAXY_ISSUER=$GALAXY_AUTH_URL/$GALAXY_AUTH_URI/auth/realms/VeEX
+  export GALAXY_REDIRECT_URI=$GALAXY_AUTH_URL/
 
+  defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
   envsubst "$defined_envs" < "/etc/guacamole/guacamole.properties.template" > "/etc/guacamole/guacamole.properties"
 }
 
