@@ -17,9 +17,13 @@ ENV GALAXY_CLIENT_HOST galaxy-client
 ENV GALAXY_TUNNEL_HOST galaxy-tunnel
 ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
 
+ARG LIVENESS_PROBE
+RUN echo "$LIVENESS_PROBE" > $GALAXY_DIR/liveness_probe.sh
+RUN chmod a+x $GALAXY_DIR/liveness_probe.sh
+
 # install gettext to support envsubst
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk add --update gettext && \
+    apk add --update gettext bash && \
     apk add --virtual temppkg &&  \
     apk del temppkg && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*

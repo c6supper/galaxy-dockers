@@ -8,6 +8,8 @@ patch_conf() {
   envsubst "$defined_envs" < "/usr/local/openresty/nginx/conf/nginx.conf.template" > "/usr/local/openresty/nginx/conf/nginx.conf"
 }
 
+$GALAXY_DIR/liveness_probe.sh $GALAXY_CLIENT_HOST 8080
+
 if [ ! -f "$GALAXY_INITIALIZED_MARK" ]; then
   patch_conf
   mkdir -p /var/lib/nginx/body
