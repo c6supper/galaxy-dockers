@@ -10,6 +10,7 @@ ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
 RUN mkdir -p $GALAXY_DIR
 COPY ./version $GALAXY_DIR/version
+COPY ./realm.json $GALAXY_DIR/realm.json
 COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
 #COPY ./themes/custom /opt/jboss/keycloak/themes/custom
 ARG LIVENESS_PROBE
