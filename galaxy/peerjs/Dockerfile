@@ -1,37 +1,29 @@
 
-# Use last keycloak as image
-FROM jboss/keycloak:11.0.2
+FROM peerjs/peerjs-server
 
 MAINTAINER calvin <c6supper@hotmail.com>
-
-USER root
 
 ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
 RUN mkdir -p $GALAXY_DIR
 COPY ./version $GALAXY_DIR/version
-COPY ./realm.json $GALAXY_DIR/realm.json
 COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
-#COPY ./themes/custom /opt/jboss/keycloak/themes/custom
+
 ARG LIVENESS_PROBE
 RUN echo "$LIVENESS_PROBE" > $GALAXY_DIR/liveness_probe.sh
 RUN chmod a+x $GALAXY_DIR/liveness_probe.sh
-ENV GALAXY_POSTGRES_HOST galaxy-postgres
-ENV GALAXY_POSTGRES_USER galaxy_user
-ENV GALAXY_POSTGRES_PASSWORD galaxy_123
-ENV KEYCLOAK_DB keycloak_db
-ENV KEYCLOAK_DB_USER keycloak_user
-ENV KEYCLOAK_DB_PASSWORD 123
-ENV KEYCLOAK_HTTP_PORT 8080
-ENV GALAXY_POSTGRES_PORT 5432
 
-USER 1000
+ENV GALAXY_PEERJS_PORT 9000
+ENV GALAXY_PEERJS_URI  /ezremote
+ENV GALAXY_PEERJS_PROXIED  false
+ENV GALAXY_PEERJS_DISCOVERIED  true
 
-# build variable, could not be moved to docker-entrypoint.sh
-ENV GALAXY_KEYCLOAK_PROXY_URI keycloak
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk add --update bash && \
+    apk add --virtual temppkg &&  \
+    apk del temppkg && \
+    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
-RUN  sed -i -e 's/<web-context>auth<\/web-context>/<web-context>'"$GALAXY_KEYCLOAK_PROXY_URI"'\/auth<\/web-context>/' $JBOSS_HOME/standalone/configuration/standalone.xml
-RUN  sed -i -e 's/<web-context>auth<\/web-context>/<web-context>keycloak\/auth<\/web-context>/' $JBOSS_HOME/standalone/configuration/standalone-ha.xml
-RUN  sed -i -e 's/name="\/"/name="\/'"$GALAXY_KEYCLOAK_PROXY_URI"'\/"/' $JBOSS_HOME/standalone/configuration/standalone.xml
-RUN  sed -i -e 's/name="\/"/name="\/'"$GALAXY_KEYCLOAK_PROXY_URI"'\/"/' $JBOSS_HOME/standalone/configuration/standalone-ha.xml
-RUN  sed -i -e 's/\/auth/\/'"$GALAXY_KEYCLOAK_PROXY_URI"'\/auth"/' $JBOSS_HOME/welcome-content/index.html
+EXPOSE $GALAXY_PEERJS_PORT
+ENTRYPOINT ["/galaxy/docker-entrypoint.sh"]
+CMD [ "node bin/peerjs --port $GALAXY_PEERJS_PORT --path $GALAXY_PEERJS_URI --proxied $GALAXY_PEERJS_PROXIED --allow_discovery $GALAXY_PEERJS_DISCOVERIED" ]

@@ -4,6 +4,7 @@ set -ex
 
 patch_conf() {
   echo "initialization"
+  defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
 }
 
 # //todo need to wait for keycloak-init ready
@@ -13,7 +14,7 @@ if [ ! -f "$GALAXY_INITIALIZED_MARK" ]; then
   patch_conf
   touch $GALAXY_INITIALIZED_MARK
   echo
-  echo 'keycloak init complete; ready for start up.'
+  echo 'peerjs complete; ready for start up.'
   echo
 else
   echo
@@ -21,4 +22,4 @@ else
   echo
 fi
 
-/bin/sh -c /opt/jboss/tools/docker-entrypoint.sh -b 0.0.0.0
+/bin/sh -c "$@"
