@@ -10,9 +10,9 @@ ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
 RUN mkdir -p $GALAXY_DIR
 COPY ./version $GALAXY_DIR/version
-COPY ./realm.json $GALAXY_DIR/realm.json
+COPY ./keycloak/realm.json $GALAXY_DIR/realm.json
 COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
-#COPY ./themes/custom /opt/jboss/keycloak/themes/custom
+COPY ./galaxy-keycloak-theme/galaxy /opt/jboss/keycloak/themes/galaxy
 ARG LIVENESS_PROBE
 RUN echo "$LIVENESS_PROBE" > $GALAXY_DIR/liveness_probe.sh
 RUN chmod a+x $GALAXY_DIR/liveness_probe.sh

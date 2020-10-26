@@ -16,6 +16,8 @@ COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
 ENV GALAXY_CLIENT_HOST galaxy-client
 ENV GALAXY_TUNNEL_HOST galaxy-tunnel
 ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
+ENV GALAXY_PEERJS_HOST galaxy-peerjs
+ENV GALAXY_PEERJS_PORT 9000
 
 ARG LIVENESS_PROBE
 RUN echo "$LIVENESS_PROBE" > $GALAXY_DIR/liveness_probe.sh
