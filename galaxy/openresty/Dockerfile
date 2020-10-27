@@ -7,6 +7,7 @@ MAINTAINER calvin <c6supper@hotmail.com>
 
 # init nginx configuration
 COPY ./nginx /usr/local/openresty/nginx/conf
+COPY ./lua-resty-postgres/lib/resty/postgres.lua /usr/local/openresty/lualib/resty/
 
 ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
@@ -16,6 +17,9 @@ COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
 ENV GALAXY_CLIENT_HOST galaxy-client
 ENV GALAXY_TUNNEL_HOST galaxy-tunnel
 ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
+ENV GALAXY_CLIENT_DB guacamole_db
+ENV GALAXY_CLIENT_USER guacamole_user
+ENV GALAXY_CLIENT_PASSWORD 123 
 
 ARG LIVENESS_PROBE
 RUN echo "$LIVENESS_PROBE" > $GALAXY_DIR/liveness_probe.sh
