@@ -6,7 +6,8 @@
        
 * Build docker
     1.export nginx profiles to directory "nginx"
-    2.docker build --no-cache -t c6supper/galaxy-openresty -f Dockerfile ./
+    2.git clone postgres.lua from https://github.com/azurewang/lua-resty-postgres.git
+    3.docker build --no-cache -t c6supper/galaxy-openresty -f Dockerfile ./
     
 * Build release docker
     1. change the version

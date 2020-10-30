@@ -7,6 +7,7 @@ MAINTAINER calvin <c6supper@hotmail.com>
 
 # init nginx configuration
 COPY ./nginx /usr/local/openresty/nginx/conf
+COPY ./lua-resty-postgres/lib/resty/postgres.lua /usr/local/openresty/lualib/resty/
 
 ENV GALAXY_DIR /galaxy
 ENV GALAXY_INITIALIZED_MARK $GALAXY_DIR/patched
@@ -16,6 +17,11 @@ COPY ./docker-entrypoint.sh $GALAXY_DIR/docker-entrypoint.sh
 ENV GALAXY_CLIENT_HOST galaxy-client
 ENV GALAXY_TUNNEL_HOST galaxy-tunnel
 ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
+ENV GALAXY_CLIENT_DB guacamole_db
+ENV GALAXY_CLIENT_USER guacamole_user
+ENV GALAXY_CLIENT_PASSWORD 123
+ENV GALAXY_POSTGRES_HOST galaxy-postgres
+ENV GALAXY_OPENRESTY_RESOLVER 127.0.0.11
 ENV GALAXY_PEERJS_HOST galaxy-peerjs
 ENV GALAXY_PEERJS_PORT 9000
 
