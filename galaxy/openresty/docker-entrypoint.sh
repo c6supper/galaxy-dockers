@@ -6,6 +6,7 @@ patch_conf() {
   defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
   envsubst "$defined_envs" < "/usr/local/openresty/nginx/conf/conf.d/server.conf.template" > "/usr/local/openresty/nginx/conf/conf.d/server.conf"
   envsubst "$defined_envs" < "/usr/local/openresty/nginx/conf/nginx.conf.template" > "/usr/local/openresty/nginx/conf/nginx.conf"
+  envsubst "$defined_envs" < "/usr/local/openresty/nginx/conf/lua/connect_postgres.lua.template" > "/usr/local/openresty/nginx/conf/lua/connect_postgres.lua"
 }
 
 $GALAXY_DIR/liveness_probe.sh $GALAXY_CLIENT_HOST 8080
