@@ -38,7 +38,7 @@ RUN chmod a+x $GALAXY_DIR/liveness_probe.sh
 
 # install gettext to support envsubst
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk add --update gettext bash postgresql-client && \
+    apk add --update gettext bash && \
     apk add --virtual temppkg &&  \
     apk del temppkg && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
