@@ -20,6 +20,8 @@ ENV GALAXY_TUNNEL_HOST galaxy-tunnel
 ENV GALAXY_KEYCLOAK_HOST galaxy-keycloak
 
 ENV GALAXY_POSTGRES_HOST galaxy-postgres
+ENV GALAXY_POSTGRES_USER galaxy-user
+ENV GALAXY_POSTGRES_PASSWORD 123
 
 ENV GALAXY_CLIENT_DB guacamole_db
 
@@ -38,7 +40,7 @@ RUN chmod a+x $GALAXY_DIR/liveness_probe.sh
 
 # install gettext to support envsubst
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk add --update gettext bash && \
+    apk add --update gettext bash postgresql-client && \
     apk add --virtual temppkg &&  \
     apk del temppkg && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
